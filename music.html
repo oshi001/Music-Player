@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0-10/css/all.min.css" integrity="sha512-Pv1WJMqAtVgNNct5vhq+4cgkKinKpV1jCwSWD4am9CjwxsJSCkLWKcE/ZBqHnEE1mHs01c8B0GMvcn/pQ/yrog==" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+        <h2 id="title">Lotus Lane</h2>
+        <h3 id="artist">The Loyalist</h3>
+        <div class="image_container">
+            <img src="images/1.png">
+        </div>
+        <audio src="musics/1.mp3"></audio>
+
+        <!-- controls -->
+        <div class="music_controls">
+            <i class="fas fa-backward" id="prev" title="previous"></i>
+            <i class="fas fa-play main-btn" id="play" title="Play"></i>
+            <i class="fas fa-forward" id="next" title="Next"></i>
+            <i class="fas fa-history" id="repeat" title="Repeat"></i>
+        </div>
+    </div>
+    </div>
+
+
+
+    <script>
+        const music=document.querySelector("audio");
+        const play=document.getElementById('play');
+        const img=document.querySelector("img");
+        const artist=document.getElementById('artist');
+        const title=document.getElementById('title');
+        const prev=document.getElementById('prev');
+        const next=document.getElementById('next');
+        const repeat=document.getElementById('repeat');
+        //an array of object
+        const songs =[
+            {
+                name:"1",
+                title:"Blue Eyes",
+                artist:"Honey Singh",
+            },
+            {
+                name:"2",
+                title:"Dil Mae Ho Tum",
+                artist:"Armaan Malik",
+            },
+            {
+                name:"3",
+                title:"Humnava Mere",
+                artist:"Jubin Nautiyal",
+            },
+            {
+                name:"4",
+                title:"Dil Chori Sadda",
+                artist:"Honey Singh",
+            },
+            {
+                name:"5",
+                title:"Kamal hae",
+                artist:"Badshah",
+            },
+            
+            
+        ];
+
+        //an array of object    
+        let isPlaying=false;
+
+        
+        
+        const playMusic=()=>{
+            isPlaying=true;
+            music.play();
+            play.classList.replace('fa-play','fa-pause');
+            // to add a class we use add
+            img.classList.add('anime');
+        };
+
+        
+        const pauseMusic=()=>{
+            isPlaying=false;
+            music.pause();
+            play.classList.replace('fa-pause','fa-play');
+            
+            img.classList.remove('anime');
+        };
+
+        
+
+        play.addEventListener('click',()=>{
+            
+            isPlaying ? pauseMusic() : playMusic();
+        });
+
+        //changing the music data
+        const loadSong = (songs) =>{
+            title.textContent=songs.title;
+            artist.textContent=songs.artist;
+            music.src=`musics/${songs.name}.mp3`;
+            img.src=`images/${songs.name}.png`;
+            // img.src="images/"+songs.name+ ".png";
+
+
+        };
+
+
+        songIdx=0
+
+        repeat.addEventListener('click',()=>{
+            
+                loadSong(songs[songIdx]);
+                playMusic();
+                
+            
+        });
+
+        prev.addEventListener('click',()=>{
+            songIdx=(songIdx-1+songs.length)%songs.length;
+            loadSong(songs[songIdx]);
+            playMusic();
+        });
+        
+        next.addEventListener('click',()=>{
+            songIdx=(songIdx+1)%songs.length;
+            loadSong(songs[songIdx]);
+            playMusic();
+        });
+
+
+    </script>
+</body>
+</html>
